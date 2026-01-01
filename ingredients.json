@@ -1,0 +1,170 @@
+[
+  {
+    "name": "sodium benzoate",
+    "category": "preservative",
+    "consensus": "Generally recognized as safe at regulated levels",
+    "concerns": [
+      "May cause sensitivity reactions in some individuals",
+      "Potential concern when combined with vitamin C under certain conditions"
+    ],
+    "certainty": "moderate",
+    "when_it_matters": "May matter for people with known preservative sensitivities",
+    "when_it_does_not": "For most people consuming packaged foods occasionally, evidence suggests low risk"
+  },
+  {
+    "name": "potassium sorbate",
+    "category": "preservative",
+    "consensus": "Widely used and considered safe within permitted limits",
+    "concerns": [
+      "Rare reports of mild skin or digestive irritation"
+    ],
+    "certainty": "high",
+    "when_it_matters": "May matter for individuals with very sensitive skin or digestion",
+    "when_it_does_not": "For the general population, it is not considered a significant concern"
+  },
+  {
+    "name": "aspartame",
+    "category": "artificial sweetener",
+    "consensus": "Approved for use by major regulatory authorities",
+    "concerns": [
+      "Not suitable for individuals with phenylketonuria (PKU)",
+      "Ongoing public debate despite regulatory approval"
+    ],
+    "certainty": "high",
+    "when_it_matters": "Matters for people with PKU or those consuming large amounts regularly",
+    "when_it_does_not": "For most people, occasional consumption is considered safe by regulators"
+  },
+  {
+    "name": "sucralose",
+    "category": "artificial sweetener",
+    "consensus": "Considered safe by regulatory agencies",
+    "concerns": [
+      "Some evidence suggests possible effects on gut microbiota"
+    ],
+    "certainty": "moderate",
+    "when_it_matters": "May matter for people sensitive to artificial sweeteners",
+    "when_it_does_not": "For occasional use, current evidence does not indicate major risk"
+  },
+  {
+    "name": "tartrazine",
+    "category": "artificial color",
+    "consensus": "Permitted for use with restrictions in many countries",
+    "concerns": [
+      "Possible behavioral sensitivity in a subset of children"
+    ],
+    "certainty": "low",
+    "when_it_matters": "May matter for children with known sensitivity to food dyes",
+    "when_it_does_not": "For most adults, evidence does not suggest meaningful risk"
+  },
+  {
+    "name": "sunset yellow",
+    "category": "artificial color",
+    "consensus": "Allowed within regulated limits",
+    "concerns": [
+      "Potential sensitivity reactions in some individuals"
+    ],
+    "certainty": "low",
+    "when_it_matters": "May matter for individuals sensitive to food colors",
+    "when_it_does_not": "For most people, consumption within limits is considered low risk"
+  },
+  {
+    "name": "monosodium glutamate",
+    "category": "flavor enhancer",
+    "consensus": "Considered safe for the general population",
+    "concerns": [
+      "Some people report headache or discomfort, evidence is mixed"
+    ],
+    "certainty": "moderate",
+    "when_it_matters": "May matter for people who report sensitivity symptoms",
+    "when_it_does_not": "For most people, MSG does not cause adverse effects"
+  },
+  {
+    "name": "disodium inosinate",
+    "category": "flavor enhancer",
+    "consensus": "Considered safe at permitted levels",
+    "concerns": [
+      "May contribute to higher sodium intake when combined with other additives"
+    ],
+    "certainty": "high",
+    "when_it_matters": "May matter for individuals monitoring sodium intake",
+    "when_it_does_not": "At typical levels, it is not considered a major concern"
+  },
+  {
+    "name": "palm oil",
+    "category": "fat",
+    "consensus": "Commonly used cooking oil",
+    "concerns": [
+      "High saturated fat content",
+      "Environmental sustainability concerns"
+    ],
+    "certainty": "high",
+    "when_it_matters": "May matter for people managing cholesterol or heart health",
+    "when_it_does_not": "In small amounts, it is comparable to other saturated fats"
+  },
+  {
+    "name": "hydrogenated vegetable oil",
+    "category": "fat",
+    "consensus": "Source of trans fats, which are widely discouraged",
+    "concerns": [
+      "Associated with increased cardiovascular risk"
+    ],
+    "certainty": "high",
+    "when_it_matters": "Matters for anyone concerned about heart health",
+    "when_it_does_not": "Rare in products reformulated to remove trans fats"
+  },
+  {
+    "name": "citric acid",
+    "category": "acidity regulator",
+    "consensus": "Widely used and generally considered safe",
+    "concerns": [
+      "May cause irritation in very sensitive individuals"
+    ],
+    "certainty": "high",
+    "when_it_matters": "May matter for people with sensitive teeth or stomach",
+    "when_it_does_not": "For most people, it is not a health concern"
+  },
+  {
+    "name": "phosphoric acid",
+    "category": "acidity regulator",
+    "consensus": "Approved for use in food and beverages",
+    "concerns": [
+      "Excessive intake may affect bone health"
+    ],
+    "certainty": "moderate",
+    "when_it_matters": "May matter for people consuming large amounts of soft drinks",
+    "when_it_does_not": "Occasional intake is not considered harmful"
+  },
+  {
+    "name": "lecithin",
+    "category": "emulsifier",
+    "consensus": "Generally considered safe",
+    "concerns": [
+      "May be derived from soy, which can matter for allergies"
+    ],
+    "certainty": "high",
+    "when_it_matters": "Matters for individuals with soy allergy",
+    "when_it_does_not": "For most people, lecithin is not a concern"
+  },
+  {
+    "name": "xanthan gum",
+    "category": "thickener",
+    "consensus": "Considered safe for general use",
+    "concerns": [
+      "May cause digestive discomfort in some people at high amounts"
+    ],
+    "certainty": "high",
+    "when_it_matters": "May matter for people with sensitive digestion",
+    "when_it_does_not": "At typical levels, it is well tolerated"
+  },
+  {
+    "name": "sodium nitrite",
+    "category": "curing agent",
+    "consensus": "Permitted with strict limits in processed meats",
+    "concerns": [
+      "Potential formation of harmful compounds at high intake"
+    ],
+    "certainty": "moderate",
+    "when_it_matters": "May matter for frequent consumers of processed meats",
+    "when_it_does_not": "Occasional consumption within limits is generally considered safe"
+  }
+]
