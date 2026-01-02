@@ -48,3 +48,35 @@ The AI behaves like a **co-pilot**, not a lookup tool.
 
 #🏗️ Architecture Overview
 
+
+The experience prioritizes **reasoning quality and interaction design** over database scale or OCR accuracy.
+
+# 🚀 Live Demo
+
+👉 *Live Prototype:*
+https://ai-copilot-ingredient-kpnhyn9vsts2j5ccgaffm7.streamlit.app/
+
+
+# 🛠️ Tech Stack
+
+- **Frontend:** Streamlit
+- **AI Models:** OpenAI Multimodal & Language Models
+- **Backend:** Python
+- **Data:** Curated, constrained ingredient dataset (JSON)
+
+# ⚠️ Design Principles & Trade-offs
+
+- OCR accuracy is intentionally not optimized  
+- The system avoids health scores and binary “good/bad” labels  
+- Ingredient completeness is deprioritized in favor of clarity and trust  
+- The AI focuses on *decision support*, not medical advice
+
+This aligns with the challenge’s emphasis on **AI-native experiences**.
+
+#▶️ Run Locally
+
+```bash
+pip install -r requirements.txt
+export OPENAI_API_KEY="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"
+streamlit run app.py
+
