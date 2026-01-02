@@ -2,7 +2,6 @@
 
 import streamlit as st
 from PIL import Image
-import pytesseract
 import json
 import os
 from openai import OpenAI
@@ -16,9 +15,6 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 with open("data/ingredients.json") as f:
     ING_DB = json.load(f)
-
-def extract_text(image):
-    return pytesseract.image_to_string(image)
 
 def match_ingredients(text):
     text = text.lower()
@@ -69,15 +65,21 @@ Evidence:
 
     return response.choices[0].message.content
 
-uploaded = st.file_uploader("Upload label image", type=["jpg","png","jpeg"])
+uploaded = st.file_uploader(
+    "Upload ingredient label image (optional)",
+    type=["jpg", "jpeg", "png"]
+)
+
+raw_text = ""
 
 if uploaded:
     image = Image.open(uploaded)
     st.image(image, use_column_width=True)
 
-    raw_text = extract_text(image)
-    evidence = match_ingredients(raw_text)
+st.subheader("Ingredient text")
+raw_text = st.text_area(
+    "Paste or edit ingredients here (AI will reason on this text):",
+    height=180,
+    placeholder="e.g. Whole wheat flour, sugar, maltodextrin, vitamins..."
+)
 
-    if st.button("Explain"):
-        output = ai_copilot(raw_text, evidence)
-        st.write(output)
