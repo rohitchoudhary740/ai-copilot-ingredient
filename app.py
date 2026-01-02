@@ -10,9 +10,23 @@ from io import BytesIO
 # Page config
 # ----------------------------
 st.set_page_config(page_title="Ingredient AI Co-Pilot", layout="centered")
+st.markdown(
+    """
+    <style>
+    section.main > div { max-width: 720px; }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
-st.title("🥗 Ingredient AI Co-Pilot")
-st.write("Upload a packaged food ingredient label. The AI explains what matters.")
+
+st.title("Ingredient AI Co-Pilot")
+
+st.caption(
+    "An AI-native assistant that interprets food ingredients and helps you decide — "
+    "without overwhelming you."
+)
+
 
 # ----------------------------
 # OpenAI client (defensive)
@@ -118,10 +132,17 @@ Evidence:
 # ----------------------------
 # UI
 # ----------------------------
+st.subheader("1. Show the product")
+
 uploaded = st.file_uploader(
-    "Upload ingredient label image",
+    "Upload a food packet ingredient label",
     type=["jpg", "jpeg", "png"]
 )
+
+st.caption(
+    "You can upload an image, paste ingredients manually, or do both."
+)
+
 
 raw_text = ""
 
@@ -129,14 +150,18 @@ if uploaded:
     image = Image.open(uploaded)
     st.image(image, use_column_width=True)
 
-st.subheader("Ingredient text")
+st.subheader("2. Ingredient information")
+
 raw_text = st.text_area(
-    "Paste or edit ingredients here (AI will reason on this text):",
-    height=180,
-    placeholder="e.g. Whole wheat flour, sugar, maltodextrin, vitamins..."
+    "Ingredient text (auto-filled from image when possible):",
+    height=160,
+    placeholder="Example: Rolled oats, sugar, almonds, maltodextrin..."
 )
 
-if st.button("🧠 Explain as AI Co-Pilot"):
+st.divider()
+
+if st.button("Explain ingredients", use_container_width=True):
+
     if uploaded:
         img_b64 = image_to_base64(image)
         with st.spinner("Reading ingredients from image…"):
@@ -156,4 +181,7 @@ if st.button("🧠 Explain as AI Co-Pilot"):
     st.subheader("AI Insight")
     st.write(output)
 
-    st.info("This is evidence-aware decision support, not medical advice.")
+  st.caption(
+    "This is evidence-aware decision support, not medical or dietary advice."
+)
+
