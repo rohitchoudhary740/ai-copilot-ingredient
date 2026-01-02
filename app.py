@@ -5,6 +5,14 @@ from PIL import Image
 import json
 import os
 from openai import OpenAI
+import base64
+from io import BytesIO
+
+def image_to_base64(img):
+    buffer = BytesIO()
+    img.save(buffer, format="PNG")
+    return base64.b64encode(buffer.getvalue()).decode()
+
 
 st.set_page_config(page_title="Ingredient AI Co-Pilot", layout="centered")
 
@@ -19,6 +27,31 @@ with open("data/ingredients.json") as f:
 def match_ingredients(text):
     text = text.lower()
     return [i for i in ING_DB if i["name"] in text]
+
+def extract_ingredients_from_image(image):
+    prompt = """
+You are reading a food packet image.
+Extract ONLY the ingredient list text exactly as written.
+Do not explain. Do not summarize.
+If ingredients are unclear, return your best guess.
+"""
+
+    response = client.responses.create(
+        model="gpt-4.1-mini",
+        input=[{
+            "role": "user",
+            "content": [
+                {"type": "input_text", "text": prompt},
+                {
+                    "type": "input_image",
+                    "image_base64": image
+                }
+            ]
+        }],
+    )
+
+    return response.output_text
+
 
 def ai_copilot(raw_text, evidence):
     system_prompt = """
@@ -83,8 +116,15 @@ raw_text = st.text_area(
     placeholder="e.g. Whole wheat flour, sugar, maltodextrin, vitamins..."
 )
 if st.button("🧠 Explain as AI Co-Pilot"):
+    if uploaded:
+        img_b64 = image_to_base64(image)
+        with st.spinner("Reading ingredients from image…"):
+            raw_text = extract_ingredients_from_image(img_b64)
+            st.subheader("Extracted ingredients")
+            st.text(raw_text)
+
     if not raw_text.strip():
-        st.warning("Please provide ingredient text for analysis.")
+        st.warning("Could not extract ingredients. Please paste text manually.")
         st.stop()
 
     evidence = match_ingredients(raw_text)
@@ -94,7 +134,3 @@ if st.button("🧠 Explain as AI Co-Pilot"):
 
     st.subheader("AI Insight")
     st.write(output)
-
-    st.info(
-        "This is evidence-aware decision support, not medical advice."
-    )
