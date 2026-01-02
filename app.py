@@ -82,4 +82,19 @@ raw_text = st.text_area(
     height=180,
     placeholder="e.g. Whole wheat flour, sugar, maltodextrin, vitamins..."
 )
+if st.button("🧠 Explain as AI Co-Pilot"):
+    if not raw_text.strip():
+        st.warning("Please provide ingredient text for analysis.")
+        st.stop()
 
+    evidence = match_ingredients(raw_text)
+
+    with st.spinner("AI is reasoning for you…"):
+        output = ai_copilot(raw_text, evidence)
+
+    st.subheader("AI Insight")
+    st.write(output)
+
+    st.info(
+        "This is evidence-aware decision support, not medical advice."
+    )
