@@ -161,7 +161,6 @@ raw_text = st.text_area(
 st.divider()
 
 if st.button("Explain ingredients", use_container_width=True):
-
     if uploaded:
         img_b64 = image_to_base64(image)
         with st.spinner("Reading ingredients from image…"):
@@ -181,7 +180,9 @@ if st.button("Explain ingredients", use_container_width=True):
     st.subheader("AI Insight")
     st.write(output)
 
-  st.caption(
+# 👇 THIS MUST BE OUTSIDE THE IF BLOCK
+st.caption(
     "This is evidence-aware decision support, not medical or dietary advice."
 )
+
 
