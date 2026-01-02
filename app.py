@@ -1,5 +1,3 @@
-# PASTE YOUR FULL STREAMLIT CODE BELOW THIS LINE
-
 import streamlit as st
 from PIL import Image
 import json
@@ -8,19 +6,27 @@ from openai import OpenAI
 import base64
 from io import BytesIO
 
-def image_to_base64(img):
-    buffer = BytesIO()
-    img.save(buffer, format="PNG")
-    return base64.b64encode(buffer.getvalue()).decode()
-
-
+# ----------------------------
+# Page config
+# ----------------------------
 st.set_page_config(page_title="Ingredient AI Co-Pilot", layout="centered")
 
 st.title("🥗 Ingredient AI Co-Pilot")
 st.write("Upload a packaged food ingredient label. The AI explains what matters.")
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+# ----------------------------
+# OpenAI client (defensive)
+# ----------------------------
+api_key = os.getenv("OPENAI_API_KEY")
+if not api_key:
+    st.error("OPENAI_API_KEY not found. Please set it in Streamlit Secrets.")
+    st.stop()
 
+client = OpenAI(api_key=api_key)
+
+# ----------------------------
+# Load ingredient database
+# ----------------------------
 with open("data/ingredients.json") as f:
     ING_DB = json.load(f)
 
@@ -28,31 +34,41 @@ def match_ingredients(text):
     text = text.lower()
     return [i for i in ING_DB if i["name"] in text]
 
-def extract_ingredients_from_image(image):
-    prompt = """
-You are reading a food packet image.
-Extract ONLY the ingredient list text exactly as written.
-Do not explain. Do not summarize.
-If ingredients are unclear, return your best guess.
-"""
+# ----------------------------
+# Image helpers
+# ----------------------------
+def image_to_base64(img):
+    buffer = BytesIO()
+    img.save(buffer, format="PNG")
+    encoded = base64.b64encode(buffer.getvalue()).decode()
+    return f"data:image/png;base64,{encoded}"
+
+def extract_ingredients_from_image(image_b64):
+    prompt = (
+        "You are reading a food packet image.\n"
+        "Extract ONLY the ingredient list text exactly as written.\n"
+        "Do not explain. Do not summarize.\n"
+        "If unclear, make your best guess."
+    )
 
     response = client.responses.create(
         model="gpt-4.1-mini",
-        input=[{
-            "role": "user",
-            "content": [
-                {"type": "input_text", "text": prompt},
-                {
-                    "type": "input_image",
-                    "image_base64": image
-                }
-            ]
-        }],
+        input=[
+            {
+                "role": "user",
+                "content": [
+                    {"type": "input_text", "text": prompt},
+                    {"type": "input_image", "image_url": image_b64},
+                ],
+            }
+        ],
     )
 
     return response.output_text
 
-
+# ----------------------------
+# AI copilot logic
+# ----------------------------
 def ai_copilot(raw_text, evidence):
     system_prompt = """
 You are an AI-native consumer health co-pilot.
@@ -67,7 +83,8 @@ Core principles:
 - Communicate uncertainty honestly
 - Reduce unnecessary fear
 
-You must respond using:
+You must respond using ALL of these sections:
+
 What stands out
 Why it matters
 Why this might not matter
@@ -91,15 +108,18 @@ Evidence:
         model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt}
+            {"role": "user", "content": user_prompt},
         ],
-        temperature=0.2
+        temperature=0.2,
     )
 
     return response.choices[0].message.content
 
+# ----------------------------
+# UI
+# ----------------------------
 uploaded = st.file_uploader(
-    "Upload ingredient label image (optional)",
+    "Upload ingredient label image",
     type=["jpg", "jpeg", "png"]
 )
 
@@ -115,6 +135,7 @@ raw_text = st.text_area(
     height=180,
     placeholder="e.g. Whole wheat flour, sugar, maltodextrin, vitamins..."
 )
+
 if st.button("🧠 Explain as AI Co-Pilot"):
     if uploaded:
         img_b64 = image_to_base64(image)
@@ -134,3 +155,5 @@ if st.button("🧠 Explain as AI Co-Pilot"):
 
     st.subheader("AI Insight")
     st.write(output)
+
+    st.info("This is evidence-aware decision support, not medical advice.")
