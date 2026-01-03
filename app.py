@@ -6,9 +6,6 @@ from openai import OpenAI
 import base64
 from io import BytesIO
 
-# ----------------------------
-# Page config
-# ----------------------------
 st.set_page_config(page_title="Ingredient AI Co-Pilot", layout="centered")
 st.markdown(
     """
@@ -28,19 +25,14 @@ st.caption(
 )
 
 
-# ----------------------------
-# OpenAI client (defensive)
-# ----------------------------
+
 api_key = os.getenv("OPENAI_API_KEY")
 if not api_key:
     st.error("OPENAI_API_KEY not found. Please set it in Streamlit Secrets.")
     st.stop()
 
 client = OpenAI(api_key=api_key)
-
-# ----------------------------
-# Load ingredient database
-# ----------------------------
+-
 with open("data/ingredients.json") as f:
     ING_DB = json.load(f)
 
@@ -48,9 +40,6 @@ def match_ingredients(text):
     text = text.lower()
     return [i for i in ING_DB if i["name"] in text]
 
-# ----------------------------
-# Image helpers
-# ----------------------------
 def image_to_base64(img):
     buffer = BytesIO()
     img.save(buffer, format="PNG")
@@ -80,9 +69,7 @@ def extract_ingredients_from_image(image_b64):
 
     return response.output_text
 
-# ----------------------------
-# AI copilot logic
-# ----------------------------
+
 def ai_copilot(raw_text, evidence):
     system_prompt = """
 You are an AI-native consumer health co-pilot.
@@ -129,9 +116,7 @@ Evidence:
 
     return response.choices[0].message.content
 
-# ----------------------------
-# UI
-# ----------------------------
+
 st.subheader("1. Show the product")
 
 uploaded = st.file_uploader(
@@ -180,7 +165,6 @@ if st.button("Explain ingredients", use_container_width=True):
     st.subheader("AI Insight")
     st.write(output)
 
-# 👇 THIS MUST BE OUTSIDE THE IF BLOCK
 st.caption(
     "This is evidence-aware decision support, not medical or dietary advice."
 )
